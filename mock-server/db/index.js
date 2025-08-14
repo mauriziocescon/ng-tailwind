@@ -1,44 +1,25 @@
-const faker = require('faker');
-
-const unknown = require('./unknown');
-const checkBox = require('./check-box');
-const checkBoxConfirmer = require('./check-box-confirmer');
-const datePicker = require('./date-picker');
-const dropdown = require('./dropdown');
-const textInput = require('./text-input');
+const album = require('./album');
+const comment = require('./comment');
+const photo = require('./photo');
+const post = require('./post');
+const todo = require('./todo');
+const user = require('./user');
 
 // db creation
 const mocks = {
-  instances: [],
+  albums: [],
+  comments: [],
+  photos: [],
+  posts: [],
+  todos: [],
+  users: [],
 };
 
-const getRandomBlock = (index) => {
-  const choice = Math.random();
-
-  if (choice < 0.05) {
-    return unknown.getUnknownComponent(index);
-  } else if (choice < 0.20) {
-    return checkBox.getCheckBox(index);
-  } else if (choice < 0.40) {
-    return checkBoxConfirmer.getCheckBoxConfirmer(index);
-  } else if (choice < 0.60) {
-    return datePicker.getDatePicker(index);
-  } else if (choice < 0.80) {
-    return dropdown.getDropdown(index);
-  } else {
-    return textInput.getTextInput(index);
-  }
-};
-
-// #items
-Array.from({length: 160}, (v1, i) => {
-  const instance = {id: `${i} - ${faker.lorem.word()}`, description: faker.lorem.sentences(), blocks: []};
-
-  Array.from({length: faker.datatype.number({min: 1, max: 20})}, (v2, j) => {
-    instance.blocks.push(getRandomBlock(j));
-  });
-
-  mocks.instances.push(instance);
-});
+Array.from({length: 100}, (value, index) => mocks.albums.push(album.getAlbum(index)));
+Array.from({length: 500}, (value, index) => mocks.comments.push(comment.getComment(index)));
+Array.from({length: 5000}, (value, index) => mocks.photos.push(photo.getPhoto(index)));
+Array.from({length: 100}, (value, index) => mocks.posts.push(post.getPost(index)));
+Array.from({length: 200}, (value, index) => mocks.todos.push(todo.getTodo(index)));
+Array.from({length: 10}, (value, index) => mocks.users.push(user.getUser(index)));
 
 exports.mocks = mocks;
