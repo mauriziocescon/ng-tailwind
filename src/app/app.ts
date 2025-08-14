@@ -6,6 +6,9 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   imports: [RouterOutlet],
   template: `
+    <h1 class="text-3xl font-bold underline">
+      Hello world!
+    </h1>
     <router-outlet/>`,
 })
 export class App {
