@@ -10,12 +10,26 @@
     "npm": ">=10.2.3"
   },
   "scripts": {
+    "postinstall": "npm run build",
+    "start": "cross-env NODE_ENV=production npm run json-server",
+    "json-server": "node ./mock-server/server.js",
+    "json-server-watch": "nodemon --ext js --watch ./mock-server ./mock-server/server.js",
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "serve": "ng serve --open | npm run json-server-watch",
+    "build": "ng build --stats-json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mauriziocescon/ng-tailwind"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/brentertz/scapegoat/blob/master/LICENSE-MIT"
+    }
+  ],
   "dependencies": {
     "@angular/common": "^20.1.0",
     "@angular/compiler": "^20.1.0",
@@ -34,12 +48,15 @@
     "@angular/cli": "^20.1.6",
     "@angular/compiler-cli": "^20.1.0",
     "@types/jasmine": "~5.1.0",
+    "cross-env": "^10.0.0",
+    "faker": "5.5.3",
     "jasmine-core": "~5.8.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "nodemon": "^3.0.0",
     "typescript": "~5.8.2"
   },
   "prettier": {
