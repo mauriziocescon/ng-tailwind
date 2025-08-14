@@ -54,6 +54,7 @@
     "@angular/cli": "^20.1.6",
     "@angular/compiler-cli": "^20.1.0",
     "@types/jasmine": "~5.1.0",
+    "@types/lodash": "^4.17.1",
     "cross-env": "^10.0.0",
     "faker": "5.5.3",
     "jasmine-core": "~5.8.0",
