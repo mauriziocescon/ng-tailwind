@@ -18,7 +18,8 @@
     "serve": "ng serve --open | npm run json-server-watch",
     "build": "ng build --stats-json",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint"
   },
   "repository": {
     "type": "git",
@@ -55,7 +56,11 @@
     "@angular/compiler-cli": "^20.1.0",
     "@types/jasmine": "~5.1.0",
     "@types/lodash": "^4.17.1",
+    "angular-eslint": "20.3.0",
     "cross-env": "^10.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
     "faker": "5.5.3",
     "jasmine-core": "~5.8.0",
     "json-server": "^0.17.4",
@@ -65,7 +70,10 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "nodemon": "^3.0.0",
-    "typescript": "~5.8.2"
+    "prettier": "^3.6.2",
+    "prettier-eslint": "^16.4.2",
+    "typescript": "~5.8.2",
+    "typescript-eslint": "8.40.0"
   },
   "prettier": {
     "printWidth": 100,
