@@ -41,6 +41,7 @@
     "@ngrx/operators": "^20.0.0",
     "@ngrx/signals": "^20.0.0",
     "@tailwindcss/postcss": "^4.1.12",
+    "@tailwindplus/elements": "^1.0.17",
     "lodash": "^4.17.21",
     "ngx-infinite-scroll": "^20.0.0",
     "ngxtension": "^5.0.0",
