@@ -1,12 +1,21 @@
-import {getAlbum} from './album.js';
-import {getComment} from './comment.js';
-import {getPhoto} from './photo.js';
-import {getPost} from './post.js';
-import {getTodo} from './todo.js';
-import {getUser} from './user.js';
+import { getAlbum, type Album } from './album.ts';
+import { getComment, type Comment } from './comment.ts';
+import { getPhoto, type Photo } from './photo.ts';
+import { getPost, type Post } from './post.ts';
+import { getTodo, type Todo } from './todo.ts';
+import { getUser, type User } from './user.ts';
+
+export interface Mocks {
+  albums: Album[];
+  comments: Comment[];
+  photos: Photo[];
+  posts: Post[];
+  todos: Todo[];
+  users: User[];
+}
 
 // db creation
-export const mocks = {
+export const mocks: Mocks = {
   albums: [],
   comments: [],
   photos: [],

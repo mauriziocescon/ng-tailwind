@@ -5,15 +5,16 @@
   "author": "Maurizio Cescon <maurizio.cescon@gmail.com>",
   "homepage": "https://be.linkedin.com/in/mauriziocescon",
   "private": false,
+  "type": "module",
   "engines": {
-    "node": ">=20.10.0",
-    "npm": ">=10.2.3"
+    "node": ">=24.13.0",
+    "npm": ">=11.6.2"
   },
   "scripts": {
     "postinstall": "npm run build",
-    "start": "cross-env NODE_ENV=production npm run json-server",
-    "json-server": "node ./mock-server/server.js",
-    "json-server-watch": "nodemon --ext js --watch ./mock-server ./mock-server/server.js",
+    "start": "tsc -p ./mock-server/tsconfig.json && cross-env NODE_ENV=production node ./dist/server/server.js",
+    "json-server": "node --experimental-strip-types ./mock-server/server.ts",
+    "json-server-watch": "node --watch --experimental-strip-types ./mock-server/server.ts",
     "ng": "ng",
     "serve": "ng serve --open | npm run json-server-watch",
     "build": "ng build --stats-json",
@@ -54,8 +55,12 @@
     "@angular/build": "^21.0.4",
     "@angular/cli": "^21.0.4",
     "@angular/compiler-cli": "^21.0.6",
+    "@faker-js/faker": "^10.2.0",
+    "@types/express": "^5.0.0",
     "@types/jasmine": "~5.1.0",
+    "@types/json-server": "^0.14.7",
     "@types/lodash": "^4.17.1",
+    "@types/node": "^25.0.0",
     "cross-env": "^10.0.0",
     "faker": "5.5.3",
     "jasmine-core": "~5.8.0",
@@ -65,7 +70,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "nodemon": "^3.0.0",
     "postcss": "^8.5.3",
     "typescript": "~5.9.3"
   },
