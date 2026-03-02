@@ -24,11 +24,13 @@ import { TranslocoPipe } from '@jsverse/transloco';
         <span class="bi bi-search" [hidden]="isNotEmpty()"></span>
         <span class="bi bi-x" [hidden]="!isNotEmpty()"></span>
       </span>
-    </div>`,
+    </div>
+  `,
   styles: `
     .addon {
       color: var(--primary-color);
-    }`,
+    }
+  `,
 })
 export class TextFilter implements OnDestroy {
   readonly valueDidChange = output<string>();
@@ -36,7 +38,7 @@ export class TextFilter implements OnDestroy {
   protected readonly value = signal('');
   protected readonly isNotEmpty = computed(() => !isEmpty(this.value()));
   protected timeoutRef: number | undefined = undefined;
-  
+
   ngOnDestroy() {
     clearTimeout(this.timeoutRef);
   }

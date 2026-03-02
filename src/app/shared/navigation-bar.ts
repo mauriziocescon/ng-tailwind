@@ -10,7 +10,8 @@ import { AppLanguage } from '../core/app-language';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <nav>
-    </nav>`,
+    </nav>
+  `,
 })
 export class NavigationBar implements OnInit {
   private readonly router = inject(Router);

@@ -11,7 +11,8 @@ import { Album } from '../album';
         <h4 class="card-title">{{ title() }}</h4>
         <h6 class="card-subtitle mb-2 text-muted">{{ subtitle() }}</h6>
       </div>
-    </div>`,
+    </div>
+  `,
 })
 export class AlbumCard {
   readonly album = input.required<Album>();

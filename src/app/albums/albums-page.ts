@@ -51,8 +51,8 @@ import { AlbumsStore } from './albums-store';
         <div class="full-width-message" (click)="retry()"> {{ "ALBUMS.RETRY" | transloco }}</div>
       }
       <app-scroll-to-top />
-
-    </div>`,
+    </div>
+  `,
   styles: `
     .albums-page {
       padding-top: 10px;
@@ -61,7 +61,8 @@ import { AlbumsStore } from './albums-store';
         padding-top: 10px;
         padding-bottom: 10px;
       }
-    }`,
+    }
+  `,
 })
 export class AlbumsPage implements OnInit {
   private readonly transloco = inject(TranslocoService);

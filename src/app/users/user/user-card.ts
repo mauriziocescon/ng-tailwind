@@ -12,7 +12,8 @@ import { User } from '../user';
         <h6 class="card-subtitle mb-2 text-muted">{{ subtitle() }}</h6>
         <p class="card-text">{{ content() }}</p>
       </div>
-    </div>`,
+    </div>
+  `,
 })
 export class UserCard {
   readonly user = input.required<User>();

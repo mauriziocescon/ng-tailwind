@@ -13,7 +13,8 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" (click)="close()">{{ buttonLabel() }}</button>
-    </div>`,
+    </div>
+  `,
 })
 export class ModalAlert {
   readonly title = signal<string | undefined>(undefined);

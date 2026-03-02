@@ -14,7 +14,8 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" (click)="yes()">{{ yesButtonLabel() }}</button>
       <button type="button" class="btn btn-default" (click)="no()">{{ noButtonLabel() }}</button>
-    </div>`,
+    </div>
+  `,
 })
 export class ModalConfirmer {
   readonly title = signal<string | undefined>(undefined);

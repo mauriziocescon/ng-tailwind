@@ -206,7 +206,8 @@ import { AppLanguage } from './core/app-language';
       <div class="px-4 sm:px-6 lg:px-8">
         <router-outlet />
       </div>
-    </main>`
+    </main>
+  `,
 })
 export class App implements OnInit {
   private readonly router = inject(Router);

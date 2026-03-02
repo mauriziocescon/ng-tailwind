@@ -46,8 +46,8 @@ import { UsersStore } from './users-store';
         <div class="full-width-message" (click)="retry()"> {{ "USERS.RETRY" | transloco }}</div>
       }
       <app-scroll-to-top />
-
-    </div>`,
+    </div>
+  `,
   styles: `
     .users-page {
       padding-top: 10px;
@@ -56,7 +56,8 @@ import { UsersStore } from './users-store';
         padding-top: 10px;
         padding-bottom: 10px;
       }
-    }`,
+    }
+  `,
 })
 export class UsersPage implements OnInit {
   private readonly transloco = inject(TranslocoService);
