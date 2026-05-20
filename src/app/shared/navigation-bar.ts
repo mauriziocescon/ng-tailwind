@@ -37,7 +37,7 @@ import { AppLanguage } from '../core/app-language';
               </a>
             </li>
           </ul>
-          <ul class="flex flex-col lg:flex-row gap-1 lg:gap-4 mt-2 lg:mt-0 pr-4">
+          <ul class="flex flex-col lg:flex-row gap-1 lg:gap-4 mt-2 lg:mt-0 pl-4">
             @if (canOpenJsonServer()) {
               <li>
                 <a class="block text-white/90 hover:text-white cursor-pointer py-1" (click)="openJsonServer()">
