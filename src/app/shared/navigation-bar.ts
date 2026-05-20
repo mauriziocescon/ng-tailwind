@@ -15,7 +15,14 @@ import { AppLanguage } from '../core/app-language';
   template: `
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 backdrop-blur-md shadow-lg px-6 py-3">
       <div class="flex flex-wrap items-center justify-between max-w-7xl mx-auto">
-        <a class="text-white font-extrabold text-xl tracking-tight hover:scale-105 transition-transform duration-200" href="#">{{ "NAVIGATION_BAR.NAME" | transloco }}</a>
+        <a class="flex items-center gap-2 text-white font-extrabold text-xl tracking-tight hover:scale-105 transition-transform duration-200" href="#">
+          <svg class="size-8 animate-[spin_3s_linear_infinite]" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" fill="currentColor" opacity="0.9"/>
+            <path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+            <path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+          </svg>
+          {{ "NAVIGATION_BAR.NAME" | transloco }}
+        </a>
         <button class="lg:hidden text-white/90 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors duration-200" type="button" (click)="toggleCollapsed()">
           <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />

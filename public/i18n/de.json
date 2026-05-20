@@ -1,8 +1,8 @@
 {
   "NAVIGATION_BAR": {
-    "ALBUMS": "***Albums***",
+    "ALBUMS": "Alben",
     "NAME": "Ng Tailwind",
-    "SELECT_LANGUAGE": "Sprache ӓndern",
+    "SELECT_LANGUAGE": "Sprache ändern",
     "USERS": "Benutzer"
   },
   "TEXT_FILTER": {
