@@ -1,30 +1,70 @@
 {
   "name": "ng-tailwind",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A demo application built with angular and tailwind",
+  "author": "Maurizio Cescon <maurizio.cescon@gmail.com>",
+  "homepage": "https://be.linkedin.com/in/mauriziocescon",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.6.2",
+  "engines": {
+    "node": ">=24.13.0",
+    "npm": ">=11.6.2"
+  },
   "scripts": {
+    "postinstall": "npm run build",
+    "start": "tsc -p ./mock-server/tsconfig.json && cross-env NODE_ENV=production node ./dist/server/server.js",
+    "json-server": "node --experimental-strip-types ./mock-server/server.ts",
+    "json-server-watch": "node --watch-path=./mock-server --experimental-strip-types ./mock-server/server.ts",
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "serve": "ng serve --open | npm run json-server-watch",
+    "build": "ng build --stats-json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
-  "private": true,
-  "packageManager": "npm@11.12.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mauriziocescon/ng-tailwind"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/brentertz/scapegoat/blob/master/LICENSE-MIT"
+    }
+  ],
   "dependencies": {
+    "@angular/cdk": "^21.2.0",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
     "@angular/core": "^21.2.0",
     "@angular/forms": "^21.2.0",
     "@angular/platform-browser": "^21.2.0",
     "@angular/router": "^21.2.0",
+    "@jsverse/transloco": "^8.2.0",
+    "@ngrx/operators": "^21.0.0",
+    "@ngrx/signals": "^21.0.0",
+    "lodash": "^4.17.21",
+    "ngx-infinite-scroll": "^21.0.0",
+    "ngxtension": "^7.0.2",
     "rxjs": "~7.8.0",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^4.3.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@angular/build": "^21.2.11",
     "@angular/cli": "^21.2.11",
     "@angular/compiler-cli": "^21.2.0",
+    "@faker-js/faker": "^10.2.0",
+    "@tailwindcss/postcss": "^4.1.12",
+    "@types/express": "^5.0.0",
+    "@types/json-server": "^0.14.7",
+    "@types/lodash": "^4.17.1",
+    "@types/node": "^25.0.0",
+    "cross-env": "^10.0.0",
     "jsdom": "^28.0.0",
+    "json-server": "^0.17.4",
+    "postcss": "^8.5.3",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
