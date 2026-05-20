@@ -9,7 +9,7 @@ import { Album } from '../album';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
-      class="rounded-lg border border-gray-200 shadow-sm overflow-hidden group hover:shadow-xl transition-shadow duration-300"
+      class="rounded-lg border border-gray-200 shadow-sm overflow-hidden group hover:shadow-xl transition-shadow duration-300 animate-[fade-in-up_0.4s_ease-out_both]"
     >
       <div class="relative aspect-square overflow-hidden">
         <img
@@ -19,6 +19,7 @@ import { Album } from '../album';
           [alt]="subtitle()"
           class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
         />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
       </div>
       <div class="p-4">
         <h4 class="text-lg font-semibold">{{ title() }}</h4>

@@ -6,7 +6,7 @@ import { User } from '../user';
   selector: 'app-user-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
+    <div class="rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group animate-[fade-in-up_0.4s_ease-out_both]">
       <div class="h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
       <div class="p-5">
         <div class="flex items-center gap-3 mb-3">
