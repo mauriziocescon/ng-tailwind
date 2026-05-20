@@ -23,27 +23,28 @@ import { TranslocoPipe } from '@jsverse/transloco';
       <span
         class="flex items-center px-3 py-2 border border-l-0 border-gray-300 rounded-r bg-gray-50 text-[var(--primary-color)] cursor-pointer"
         (click)="resetTextFilter()">
-        <svg
-          class="size-5"
-          [hidden]="isNotEmpty()"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-        </svg>
-        <svg
-          class="size-5"
-          [hidden]="!isNotEmpty()"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-        </svg>
+        @if (!isNotEmpty()) {
+          <svg
+            class="size-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+        } @else {
+          <svg
+            class="size-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        }
       </span>
     </div>
   `,
