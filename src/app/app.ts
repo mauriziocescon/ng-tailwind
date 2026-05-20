@@ -18,7 +18,7 @@ import { NavigationBar } from './shared/navigation-bar';
   `,
   styles: `
     .main-view {
-      padding-top: var(--main-view-pt);
+      padding-top: 4.25rem;
     }
   `,
 })

@@ -1,9 +1,5 @@
 @import 'tailwindcss';
 
-:root {
-  --main-view-pt: 4.25rem;
-}
-
 @media not (prefers-reduced-motion) {
   app-root::after {
     content: "";
