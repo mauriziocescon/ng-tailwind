@@ -17,24 +17,13 @@ import { debounceTime } from 'rxjs/operators';
   selector: 'app-scroll-to-top',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="go-up" (click)="scrollToTop()">
-      <svg class="size-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+    <div class="fixed bottom-4 right-4 z-50 cursor-pointer text-indigo-600 hover:text-indigo-800 opacity-70 hover:opacity-100 transition-all duration-200 hover:scale-110" (click)="scrollToTop()">
+      <svg class="size-12 drop-shadow-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
       </svg>
     </div>
   `,
-  styles: `
-    .go-up {
-      position: fixed;
-      color: var(--primary-color);
-      opacity: 0.7;
-      bottom: 5px;
-      right: 3%;
-      transform: translateX(-50%);
-      z-index: 200;
-      cursor: pointer;
-    }
-  `,
+  styles: ``,
 })
 export class ScrollToTop implements OnDestroy {
   private readonly zone = inject(NgZone);

@@ -13,10 +13,10 @@ import { AppLanguage } from '../core/app-language';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--primary-color)] px-4 py-3">
-      <div class="flex flex-wrap items-center justify-between">
-        <a class="text-white font-bold text-lg" href="#">{{ "NAVIGATION_BAR.NAME" | transloco }}</a>
-        <button class="lg:hidden text-white p-2" type="button" (click)="toggleCollapsed()">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 backdrop-blur-md shadow-lg px-6 py-3">
+      <div class="flex flex-wrap items-center justify-between max-w-7xl mx-auto">
+        <a class="text-white font-extrabold text-xl tracking-tight hover:scale-105 transition-transform duration-200" href="#">{{ "NAVIGATION_BAR.NAME" | transloco }}</a>
+        <button class="lg:hidden text-white/90 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors duration-200" type="button" (click)="toggleCollapsed()">
           <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -25,22 +25,22 @@ import { AppLanguage } from '../core/app-language';
         <div
           class="w-full lg:flex lg:w-auto lg:items-center"
           [class.hidden]="isCollapsed()">
-          <ul class="flex flex-col lg:flex-row lg:mr-auto gap-1 lg:gap-4 mt-2 lg:mt-0">
+          <ul class="flex flex-col lg:flex-row lg:mr-auto gap-1 lg:gap-2 mt-3 lg:mt-0">
             <li>
-              <a class="block text-white/90 hover:text-white cursor-pointer py-1" (click)="goToAlbums()">
+              <a class="block text-white/80 hover:text-white px-3 py-1.5 rounded-lg hover:bg-white/10 transition-all duration-200 cursor-pointer" (click)="goToAlbums()">
                 {{ "NAVIGATION_BAR.ALBUMS" | transloco }}
               </a>
             </li>
             <li>
-              <a class="block text-white/90 hover:text-white cursor-pointer py-1" (click)="goToUsers()">
+              <a class="block text-white/80 hover:text-white px-3 py-1.5 rounded-lg hover:bg-white/10 transition-all duration-200 cursor-pointer" (click)="goToUsers()">
                 {{ "NAVIGATION_BAR.USERS" | transloco }}
               </a>
             </li>
           </ul>
-          <ul class="flex flex-col lg:flex-row gap-1 lg:gap-4 mt-2 lg:mt-0 pl-4">
+          <ul class="flex flex-col lg:flex-row gap-1 lg:gap-2 mt-2 lg:mt-0 pr-4">
             @if (canOpenJsonServer()) {
               <li>
-                <a class="block text-white/90 hover:text-white cursor-pointer py-1" (click)="openJsonServer()">
+                <a class="block text-white/80 hover:text-white px-3 py-1.5 rounded-lg hover:bg-white/10 transition-all duration-200 cursor-pointer" (click)="openJsonServer()">
                   <svg class="size-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path
                       stroke-linecap="round"
@@ -52,15 +52,15 @@ import { AppLanguage } from '../core/app-language';
             }
             <li class="relative">
               <a
-                class="block text-white/90 hover:text-white cursor-pointer py-1"
+                class="block text-white/80 hover:text-white px-3 py-1.5 rounded-lg hover:bg-white/10 transition-all duration-200 cursor-pointer"
                 (click)="toggleDropdown()">
                 {{ selectedLanguageId() }} ▾
               </a>
               @if (isDropdownOpen()) {
-                <div class="absolute right-0 mt-1 bg-white rounded shadow-lg py-1 min-w-[120px] z-50">
+                <div class="absolute right-0 mt-2 bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl py-2 min-w-[140px] z-50 border border-gray-100">
                   @for (language of languages(); track language) {
                     <a
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer transition-colors duration-150"
                       (click)="selectLanguage(language)">
                       {{ language }}
                     </a>

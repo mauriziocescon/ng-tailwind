@@ -8,14 +8,17 @@ import { Album } from '../album';
   imports: [NgOptimizedImage],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="rounded-lg border border-gray-200 shadow-sm overflow-hidden group hover:shadow-xl transition-shadow duration-300">
+    <div
+      class="rounded-lg border border-gray-200 shadow-sm overflow-hidden group hover:shadow-xl transition-shadow duration-300"
+    >
       <div class="relative aspect-square overflow-hidden">
         <img
           [ngSrc]="imageUrl()"
           width="400"
           height="400"
           [alt]="subtitle()"
-          class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" />
+          class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+        />
       </div>
       <div class="p-4">
         <h4 class="text-lg font-semibold">{{ title() }}</h4>
