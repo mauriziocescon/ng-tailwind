@@ -4,10 +4,15 @@ import {
   isDevMode,
   LOCALE_ID,
   provideBrowserGlobalErrorListeners,
-  provideZonelessChangeDetection,
+  provideZonelessChangeDetection
 } from '@angular/core';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withExperimentalAutoCleanupInjectors,
+  withExperimentalPlatformNavigation
+} from '@angular/router';
 
 import { provideTransloco } from '@jsverse/transloco';
 
@@ -21,7 +26,12 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideHttpClient(withFetch()),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withExperimentalPlatformNavigation(),
+      withExperimentalAutoCleanupInjectors(),
+    ),
     provideTransloco({
       config: {
         prodMode: !isDevMode(),
