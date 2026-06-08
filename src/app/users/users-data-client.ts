@@ -8,9 +8,7 @@ import { AppConstants } from '../core/app-constants';
 
 import { User } from './user';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class UsersDataClient {
   private readonly http = inject(HttpClient);
   private readonly appConstants = inject(AppConstants);

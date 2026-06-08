@@ -3,9 +3,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 
 import { UsersDataClient } from './users-data-client';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class UsersStore {
   private readonly usersDataClient = inject(UsersDataClient);
 
