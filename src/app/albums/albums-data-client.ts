@@ -8,9 +8,7 @@ import { AppConstants } from '../core/app-constants';
 
 import { Album } from './album';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AlbumsDataClient {
   private readonly http = inject(HttpClient);
   private readonly appConstants = inject(AppConstants);

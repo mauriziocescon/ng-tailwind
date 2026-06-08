@@ -18,9 +18,7 @@ type AlbumState = {
   loadCompleted: boolean,
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AlbumsStore {
   private readonly destroyRef = inject(DestroyRef);
   private readonly albumsDataClient = inject(AlbumsDataClient);
