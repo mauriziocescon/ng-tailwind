@@ -64,10 +64,10 @@ import { AppLanguage } from '../core/app-language';
                 {{ selectedLanguageId() }} ▾
               </a>
               @if (isDropdownOpen()) {
-                <div class="absolute right-0 mt-2 bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl py-2 min-w-[140px] z-50 border border-gray-100">
+                <div class="absolute right-0 mt-2 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-2xl dark:shadow-black/40 py-2 min-w-[140px] z-50 border border-gray-100 dark:border-gray-700">
                   @for (language of languages(); track language) {
                     <a
-                      class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer transition-colors duration-150"
+                      class="block px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-700 dark:hover:text-indigo-300 cursor-pointer transition-colors duration-150"
                       (click)="selectLanguage(language)">
                       {{ language }}
                     </a>

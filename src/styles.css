@@ -54,6 +54,12 @@ html {
   pointer-events: auto;
 }
 
+@media (prefers-color-scheme: dark) {
+  .cdk-overlay-backdrop {
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+
 .cdk-overlay-pane {
   position: fixed;
   inset: 0;

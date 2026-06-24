@@ -13,15 +13,15 @@ import { TranslocoPipe } from '@jsverse/transloco';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="flex shadow-sm rounded-xl overflow-hidden border border-gray-200 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-200">
+    <div class="flex shadow-sm rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-200">
       <input
         type="text"
-        class="flex-1 px-4 py-2.5 border-0 focus:outline-none text-gray-700 placeholder-gray-400"
+        class="flex-1 px-4 py-2.5 border-0 focus:outline-none text-gray-700 dark:text-gray-200 dark:bg-gray-800 placeholder-gray-400"
         placeholder="{{ 'TEXT_FILTER.PLACEHOLDER' | transloco }}"
         [(ngModel)]="value"
         (ngModelChange)="valueChange()">
       <span
-        class="flex items-center px-4 bg-gray-50 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 cursor-pointer transition-colors duration-200"
+        class="flex items-center px-4 bg-gray-50 dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200"
         (click)="resetTextFilter()">
         @if (!isNotEmpty()) {
           <svg

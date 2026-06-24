@@ -12,23 +12,23 @@ export interface ModalConfirmerData {
   selector: 'app-modal-confirmer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="flex items-center justify-between p-5 border-b border-gray-100">
-      <h4 class="text-lg font-bold text-gray-900">{{ data.title }}</h4>
+    <div class="flex items-center justify-between p-5 border-b border-gray-100 dark:border-gray-700">
+      <h4 class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ data.title }}</h4>
       <button
         type="button"
-        class="size-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors duration-150"
+        class="size-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
         aria-label="Close"
         (click)="dismiss()">
         <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
       </button>
     </div>
     <div class="p-5">
-      <p class="text-gray-600">{{ data.message }}</p>
+      <p class="text-gray-600 dark:text-gray-300">{{ data.message }}</p>
     </div>
-    <div class="flex justify-end gap-3 p-5 border-t border-gray-100 bg-gray-50/50">
+    <div class="flex justify-end gap-3 p-5 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900">
       <button
         type="button"
-        class="px-5 py-2.5 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors duration-200"
+        class="px-5 py-2.5 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
         (click)="no()">
         {{ data.noButtonLabel }}
       </button>
@@ -41,7 +41,7 @@ export interface ModalConfirmerData {
     </div>
   `,
   host: {
-    class: 'block bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden',
+    class: 'block bg-white dark:bg-gray-800 rounded-2xl shadow-2xl dark:shadow-black/30 w-full max-w-md overflow-hidden',
   },
 })
 export class ModalConfirmer {
