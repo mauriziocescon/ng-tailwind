@@ -1,7 +1,7 @@
 {
   "name": "ng-tailwind",
   "version": "1.0.0",
-  "description": "A demo application built with angular and tailwind",
+  "description": "Angular demo app showcasing Tailwind CSS",
   "author": "Maurizio Cescon <maurizio.cescon@gmail.com>",
   "homepage": "https://be.linkedin.com/in/mauriziocescon",
   "private": true,
