@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 
 import { Album } from '../album';
@@ -6,7 +6,6 @@ import { Album } from '../album';
 @Component({
   selector: 'app-album-card',
   imports: [NgOptimizedImage],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
       class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm dark:shadow-none dark:ring-1 dark:ring-white/5 overflow-hidden group hover:shadow-xl dark:hover:shadow-xl dark:hover:shadow-black/20 transition-shadow duration-300 animate-[fade-in-up_0.4s_ease-out_both]"

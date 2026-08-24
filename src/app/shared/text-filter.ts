@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, OnDestroy, output, signal } from '@angular/core';
+import { Component, computed, OnDestroy, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import isEmpty from 'lodash/isEmpty';
@@ -11,7 +11,6 @@ import { TranslocoPipe } from '@jsverse/transloco';
     FormsModule,
     TranslocoPipe,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="flex shadow-sm rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all duration-200">
       <input

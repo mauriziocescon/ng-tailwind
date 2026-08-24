@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -11,7 +11,6 @@ import { AppLanguage } from '../core/app-language';
   imports: [
     TranslocoPipe,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 backdrop-blur-md shadow-lg px-6 py-3">
       <div class="flex flex-wrap items-center justify-between max-w-7xl mx-auto">

@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 import { User } from '../user';
 
 @Component({
   selector: 'app-user-card',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm dark:shadow-none dark:ring-1 dark:ring-white/5 hover:shadow-xl dark:hover:shadow-xl dark:hover:shadow-black/20 transition-all duration-300 overflow-hidden group animate-[fade-in-up_0.4s_ease-out_both]">
       <div class="h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
