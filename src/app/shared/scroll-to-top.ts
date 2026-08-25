@@ -1,6 +1,5 @@
 import {
   afterNextRender,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
@@ -15,7 +14,6 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scroll-to-top',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="fixed bottom-4 right-4 z-50 cursor-pointer text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 opacity-70 hover:opacity-100 transition-all duration-200 hover:scale-110" (click)="scrollToTop()">
       <svg class="size-12 drop-shadow-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">

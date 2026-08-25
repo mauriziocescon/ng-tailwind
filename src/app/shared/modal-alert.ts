@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 
 export interface ModalAlertData {
@@ -9,7 +9,6 @@ export interface ModalAlertData {
 
 @Component({
   selector: 'app-modal-alert',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="flex items-center justify-between p-5 border-b border-gray-100 dark:border-gray-700">
       <h4 class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ data.title }}</h4>

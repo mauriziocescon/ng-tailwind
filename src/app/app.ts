@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { NavigationBar } from './shared/navigation-bar';
@@ -9,7 +9,6 @@ import { NavigationBar } from './shared/navigation-bar';
     RouterOutlet,
     NavigationBar,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-navigation-bar />
     <div class="main-view min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-gray-900">
