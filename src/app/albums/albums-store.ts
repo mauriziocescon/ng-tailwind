@@ -1,4 +1,4 @@
-import { computed, DestroyRef, inject, Injectable } from '@angular/core';
+import { computed, DestroyRef, inject, Service } from '@angular/core';
 
 import { pipe } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
@@ -11,14 +11,14 @@ import { Album } from './album';
 import { AlbumsDataClient } from './albums-data-client';
 
 type AlbumState = {
-  params: { textSearch: string, pageNumber: number };
-  albums: Album[],
+  params: { textSearch: string; pageNumber: number };
+  albums: Album[];
   loading: boolean;
-  error: string | undefined,
-  loadCompleted: boolean,
+  error: string | undefined;
+  loadCompleted: boolean;
 };
 
-@Injectable()
+@Service({ autoProvided: false })
 export class AlbumsStore {
   private readonly destroyRef = inject(DestroyRef);
   private readonly albumsDataClient = inject(AlbumsDataClient);
@@ -35,25 +35,39 @@ export class AlbumsStore {
   readonly albums = computed(() => this.state.albums());
   readonly isLoading = computed(() => this.state.loading());
   readonly error = computed(() => this.state.error());
-  readonly isLoadCompleted = computed<boolean>(() => this.isLoading() === false && this.albums()?.length > 0 && this.state.loadCompleted() === true);
-  readonly hasNoData = computed(() => this.albums()?.length === 0 && this.isLoading() === false && this.error() === undefined);
+  readonly isLoadCompleted = computed<boolean>(
+    () =>
+      this.isLoading() === false &&
+      this.albums()?.length > 0 &&
+      this.state.loadCompleted() === true,
+  );
+  readonly hasNoData = computed(
+    () => this.albums()?.length === 0 && this.isLoading() === false && this.error() === undefined,
+  );
   readonly shouldRetry = computed(() => this.isLoading() === false && this.error() !== undefined);
 
-  readonly isInfiniteScrollDisabled = computed(() => this.isLoading() === true || this.error() !== undefined || this.state.loadCompleted() === true);
+  readonly isInfiniteScrollDisabled = computed(
+    () =>
+      this.isLoading() === true ||
+      this.error() !== undefined ||
+      this.state.loadCompleted() === true,
+  );
 
-  private readonly loadAlbums = rxMethod<{ textSearch: string, pageNumber: number }>(
+  private readonly loadAlbums = rxMethod<{ textSearch: string; pageNumber: number }>(
     pipe(
       filter(({ textSearch }) => textSearch !== undefined),
-      tap(() => patchState(this.state, state => ({
-        albums: state.params.pageNumber === 1 ? [] : state.albums,
-        loading: true,
-        error: undefined,
-      }))),
-      switchMap(({ textSearch, pageNumber }) => this.albumsDataClient.getAlbums(textSearch, pageNumber)
-        .pipe(
+      tap(() =>
+        patchState(this.state, (state) => ({
+          albums: state.params.pageNumber === 1 ? [] : state.albums,
+          loading: true,
+          error: undefined,
+        })),
+      ),
+      switchMap(({ textSearch, pageNumber }) =>
+        this.albumsDataClient.getAlbums(textSearch, pageNumber).pipe(
           tapResponse({
-            next: data => {
-              patchState(this.state, state => ({
+            next: (data) => {
+              patchState(this.state, (state) => ({
                 loading: false,
                 albums: [...state.albums, ...data.albums],
                 loadCompleted: data.lastPage,
@@ -72,11 +86,11 @@ export class AlbumsStore {
     this.loadAlbums(this.state.params);
   }
 
-  updateParams(params: { textSearch: string, pageNumber: number }) {
+  updateParams(params: { textSearch: string; pageNumber: number }) {
     patchState(this.state, { params: { ...params } });
   }
 
   retry() {
-    patchState(this.state, state => ({ params: { ...state.params } }));
+    patchState(this.state, (state) => ({ params: { ...state.params } }));
   }
 }

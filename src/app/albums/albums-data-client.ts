@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { throwError } from 'rxjs';
@@ -8,7 +8,7 @@ import { AppConstants } from '../core/app-constants';
 
 import { Album } from './album';
 
-@Injectable()
+@Service({ autoProvided: false })
 export class AlbumsDataClient {
   private readonly http = inject(HttpClient);
   private readonly appConstants = inject(AppConstants);
@@ -19,16 +19,15 @@ export class AlbumsDataClient {
     const _limit = 20;
     const params = { q: textFilter || '', _start, _limit };
 
-    return this.http.get<Album[]>(url, { params, observe: 'response' })
-      .pipe(
-        map(response => {
-          const numOfItems = parseInt(response.headers.get('X-Total-Count') || '0', 10);
-          const lastPage = _start + _limit >= numOfItems;
+    return this.http.get<Album[]>(url, { params, observe: 'response' }).pipe(
+      map((response) => {
+        const numOfItems = parseInt(response.headers.get('X-Total-Count') || '0', 10);
+        const lastPage = _start + _limit >= numOfItems;
 
-          return { albums: response.body as Album[], lastPage };
-        }),
-        catchError((err: HttpErrorResponse) => this.handleError(err)),
-      );
+        return { albums: response.body as Album[], lastPage };
+      }),
+      catchError((err: HttpErrorResponse) => this.handleError(err)),
+    );
   }
 
   private handleError(err: HttpErrorResponse) {

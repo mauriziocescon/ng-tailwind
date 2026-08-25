@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { throwError } from 'rxjs';
@@ -8,7 +8,7 @@ import { AppConstants } from '../core/app-constants';
 
 import { User } from './user';
 
-@Injectable()
+@Service({ autoProvided: false })
 export class UsersDataClient {
   private readonly http = inject(HttpClient);
   private readonly appConstants = inject(AppConstants);
@@ -17,11 +17,10 @@ export class UsersDataClient {
     const url = this.appConstants.Api.users;
     const params = { q: textFilter || '' };
 
-    return this.http.get<User[]>(url, { params })
-      .pipe(
-        map(data => data),
-        catchError((err: HttpErrorResponse) => this.handleError(err)),
-      );
+    return this.http.get<User[]>(url, { params }).pipe(
+      map((data) => data),
+      catchError((err: HttpErrorResponse) => this.handleError(err)),
+    );
   }
 
   private handleError(err: HttpErrorResponse) {
