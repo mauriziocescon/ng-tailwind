@@ -25,6 +25,20 @@ const port = process.env.PORT || 3000;
 // Serve the built frontend in production
 if (isProduction) {
   app.use(express.static('./dist/ng-tailwind/browser'));
+
+  // Serve the SPA shell for client-side routes before delay/error so that
+  // deep-link/full-page navigations are not subject to the random delay/error
+  // injection (just like static assets already aren't). API traffic (/api/*)
+  // must fall through to the route handlers.
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (req.path.startsWith('/api/')) {
+      next();
+      return;
+    }
+
+    // load index.html (frontend will handle page changes)
+    res.sendFile(path.join(__dirname, '../dist/ng-tailwind/browser/index.html'));
+  });
 }
 
 // Enable CORS and expose the custom pagination header so cross-origin dev
@@ -41,14 +55,6 @@ app.use(express.json());
 // Mount routes
 app.use(`${isProduction ? '/api' : '/'}`, albums.router);
 app.use(`${isProduction ? '/api' : '/'}`, users.router);
-
-// Fallback on frontend routes
-app.use((req: Request, res: Response, next: NextFunction) => {
-  // load index.html (frontend will handle page changes)
-  isProduction
-    ? res.sendFile(path.join(__dirname, '../dist/ng-tailwind/browser/index.html'))
-    : next();
-});
 
 // Start listening
 app.listen(port, () => {
