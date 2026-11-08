@@ -19,7 +19,6 @@ const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
 
 // set the port of our application
-// process.env.PORT lets the port to be set by Heroku
 const port = process.env.PORT || 3000;
 
 // Serve the built frontend in production
