@@ -2,7 +2,7 @@
 
 ## Backend implementation
 
-1. Based on [json-server](https://github.com/typicode/json-server)
+1. Based on [Express](https://expressjs.com)
 
 2. Run `npm run build` and `npm start` in order to launch the server (`http://localhost:3000`) with the distribution version of the app (APIs available at `http://localhost:3000/api/`)
 
