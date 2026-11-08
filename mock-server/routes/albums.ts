@@ -11,7 +11,7 @@ router.get('/albums', (req: Request, res: Response) => {
     ? mocks.albums.filter((album) => album.title.toLowerCase().includes(q))
     : mocks.albums;
 
-  const start = Number(req.query['_start'] ?? 0);
+  const start = Number(req.query['_start']) || 0;
   const limit = Number(req.query['_limit'] ?? albums.length);
 
   res.setHeader('X-Total-Count', albums.length.toString());
