@@ -1,12 +1,15 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import express from 'express';
+import cors from 'cors';
 import type { NextFunction, Request, Response } from 'express';
+import express from 'express';
 
 import { delay } from './middlewares/delay.ts';
 import { error } from './middlewares/errors.ts';
-import { router as albumsRouter } from './routes/albums.ts';
-import { router as usersRouter } from './routes/users.ts';
+
+// routes
+import * as albums from './routes/albums.ts';
+import * as users from './routes/users.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,55 +22,33 @@ const app = express();
 // process.env.PORT lets the port to be set by Heroku
 const port = process.env.PORT || 3000;
 
-// CORS handling (replaces json-server defaults cors). The dev frontend runs
-// cross-origin at http://localhost:3000 and reads X-Total-Count for albums
-// pagination, so exposing that header is mandatory.
-app.use((req: Request, res: Response, next: NextFunction): void => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Expose-Headers', 'X-Total-Count');
-
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(204);
-    return;
-  }
-
-  next();
-});
-
-// In production, serve the built Angular app and its SPA index.html fallback
-// BEFORE the delay/error middlewares so built assets served at the root are
-// never subject to the random delay/error injection (the `error` middleware
-// only leaves paths under '/api/' alone).
+// Serve the built frontend in production
 if (isProduction) {
-  app.use(express.static(path.join(__dirname, '../dist/ng-tailwind/browser')));
-
-  app.get(/.*/, (req: Request, res: Response, next: NextFunction): void => {
-    if (req.path.startsWith('/api/')) {
-      next();
-      return;
-    }
-
-    res.sendFile(path.join(__dirname, '../dist/ng-tailwind/browser/index.html'));
-  });
+  app.use(express.static('./dist/ng-tailwind/browser'));
 }
 
-// Middlewares (same order as before)
+// Enable CORS and expose the custom pagination header so cross-origin dev
+// requests (ng serve on :4200 -> mock server on :3000) can read X-Total-Count.
+app.use(cors({ exposedHeaders: ['X-Total-Count'] }));
+
+// Middlewares (run before body parsing and routes)
 app.use(delay);
 app.use(error);
 
-// To handle POST, PUT and PATCH you need to use a body-parser
-// (express 5 ships body-parser built in)
+// To handle POST, PUT and PATCH you need body parsing
 app.use(express.json());
 
-const prefix = isProduction ? '/api' : '';
+// Mount routes
+app.use(`${isProduction ? '/api' : '/'}`, albums.router);
+app.use(`${isProduction ? '/api' : '/'}`, users.router);
 
-// Mount the per-resource routers. Each router defines its own paths (e.g.
-// '/albums', '/users'), so they are mounted at the environment prefix: '/api'
-// in production, the root in dev.
-app.use(prefix, albumsRouter);
-app.use(prefix, usersRouter);
+// Fallback on frontend routes
+app.use((req: Request, res: Response, next: NextFunction) => {
+  // load index.html (frontend will handle page changes)
+  isProduction
+    ? res.sendFile(path.join(__dirname, '../dist/ng-tailwind/browser/index.html'))
+    : next();
+});
 
 // Start listening
 app.listen(port, () => {
