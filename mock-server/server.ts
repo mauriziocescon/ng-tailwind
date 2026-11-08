@@ -30,7 +30,14 @@ if (isProduction) {
   // injection (just like static assets already aren't). API traffic (/api/*)
   // must fall through to the route handlers.
   app.use((req: Request, res: Response, next: NextFunction) => {
-    if (req.path.startsWith('/api/')) {
+    // Only frontend navigations (GET) get the SPA shell; let other verbs pass through.
+    if (req.method !== 'GET') {
+      next();
+      return;
+    }
+
+    // API traffic (both /api and anything under /api/) must reach the route handlers.
+    if (req.path === '/api' || req.path.startsWith('/api/')) {
       next();
       return;
     }
