@@ -42,6 +42,31 @@ app.use((req: Request, res: Response, next: NextFunction): void => {
   next();
 });
 
+// In production, serve the built Angular app and its SPA index.html fallback
+// BEFORE the delay/error middlewares. json-server served static assets first,
+// so built assets (served at the root: '/', '/main-*.js', '/styles-*.css')
+// were never subject to the random delay/error injection. The `error`
+// middleware only leaves paths under '/api/' alone, so if static serving ran
+// after it, every root-served asset would face a ~5% synthetic error and ~1%
+// long delay. Mounting static (and the index.html fallback) first restores the
+// original behavior while leaving '/api/*' traffic to the router + error gate.
+if (isProduction) {
+  app.use(express.static(path.join(__dirname, '../dist/ng-tailwind/browser')));
+
+  // SPA navigation fallback: serve index.html for GET requests that are not
+  // API calls and were not matched by express.static above. API traffic
+  // ('/api/*') falls through to the resource router (and its '/api/' error
+  // gate) untouched.
+  app.get(/.*/, (req: Request, res: Response, next: NextFunction): void => {
+    if (req.path.startsWith('/api/')) {
+      next();
+      return;
+    }
+
+    res.sendFile(path.join(__dirname, '../dist/ng-tailwind/browser/index.html'));
+  });
+}
+
 // Middlewares (same order as before)
 app.use(delay);
 app.use(error);
@@ -49,11 +74,6 @@ app.use(error);
 // To handle POST, PUT and PATCH you need to use a body-parser
 // (express 5 ships body-parser built in)
 app.use(express.json());
-
-// In production, serve the built Angular app
-if (isProduction) {
-  app.use(express.static(path.join(__dirname, '../dist/ng-tailwind/browser')));
-}
 
 // Deeply checks whether any nested string/number value of an item contains
 // the lowercased query substring (case-insensitive), matching json-server's
@@ -95,7 +115,9 @@ router.get('/:resource', (req: Request, res: Response): void => {
   const collection = Object.prototype.hasOwnProperty.call(mocks, resource) ? mocks[resource] : undefined;
 
   if (!collection) {
-    res.sendStatus(404);
+    // Mirror json-server's unknown-resource response: a 404 with an empty JSON
+    // object body (rather than Express's plaintext "Not Found").
+    res.status(404).json({});
     return;
   }
 
@@ -130,18 +152,6 @@ router.get('/:resource', (req: Request, res: Response): void => {
 
 // Mount routes
 app.use(`${isProduction ? '/api' : '/'}`, router);
-
-// Fallback on frontend routes (Express 5 rejects the bare '*' path string,
-// so use a trailing app.use handler). In production load index.html and let
-// the frontend handle page changes; otherwise continue.
-app.use((req: Request, res: Response, next: NextFunction): void => {
-  if (isProduction && req.method === 'GET') {
-    res.sendFile(path.join(__dirname, '../dist/ng-tailwind/browser/index.html'));
-    return;
-  }
-
-  next();
-});
 
 // Start listening
 app.listen(port, () => {
