@@ -3,10 +3,10 @@ import { fileURLToPath } from 'node:url';
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
 
-import { mocks } from './db/index.ts';
-import type { Mocks } from './db/index.ts';
 import { delay } from './middlewares/delay.ts';
 import { error } from './middlewares/errors.ts';
+import { router as albumsRouter } from './routes/albums.ts';
+import { router as usersRouter } from './routes/users.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,27 +36,13 @@ app.use((req: Request, res: Response, next: NextFunction): void => {
   next();
 });
 
-// Minimal request logger (mirrors json-server morgan-style defaults)
-app.use((req: Request, res: Response, next: NextFunction): void => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
-
 // In production, serve the built Angular app and its SPA index.html fallback
-// BEFORE the delay/error middlewares. json-server served static assets first,
-// so built assets (served at the root: '/', '/main-*.js', '/styles-*.css')
-// were never subject to the random delay/error injection. The `error`
-// middleware only leaves paths under '/api/' alone, so if static serving ran
-// after it, every root-served asset would face a ~5% synthetic error and ~1%
-// long delay. Mounting static (and the index.html fallback) first restores the
-// original behavior while leaving '/api/*' traffic to the router + error gate.
+// BEFORE the delay/error middlewares so built assets served at the root are
+// never subject to the random delay/error injection (the `error` middleware
+// only leaves paths under '/api/' alone).
 if (isProduction) {
   app.use(express.static(path.join(__dirname, '../dist/ng-tailwind/browser')));
 
-  // SPA navigation fallback: serve index.html for GET requests that are not
-  // API calls and were not matched by express.static above. API traffic
-  // ('/api/*') falls through to the resource router (and its '/api/' error
-  // gate) untouched.
   app.get(/.*/, (req: Request, res: Response, next: NextFunction): void => {
     if (req.path.startsWith('/api/')) {
       next();
@@ -75,83 +61,13 @@ app.use(error);
 // (express 5 ships body-parser built in)
 app.use(express.json());
 
-// Deeply checks whether any nested string/number value of an item contains
-// the lowercased query substring (case-insensitive), matching json-server's
-// full-text `q` filtering fidelity.
-const matchesQuery = (value: unknown, query: string): boolean => {
-  if (typeof value === 'string') {
-    return value.toLowerCase().includes(query);
-  }
+const prefix = isProduction ? '/api' : '';
 
-  if (typeof value === 'number') {
-    return value.toString().toLowerCase().includes(query);
-  }
-
-  if (Array.isArray(value)) {
-    return value.some((item) => matchesQuery(item, query));
-  }
-
-  if (value !== null && typeof value === 'object') {
-    return Object.values(value).some((item) => matchesQuery(item, query));
-  }
-
-  return false;
-};
-
-const parseInteger = (value: unknown, fallback: number): number => {
-  if (typeof value !== 'string') {
-    return fallback;
-  }
-
-  const parsed = Number.parseInt(value, 10);
-  return Number.isNaN(parsed) ? fallback : parsed;
-};
-
-// Generic resource router over the in-memory `mocks` object
-const router = express.Router();
-
-router.get('/:resource', (req: Request, res: Response): void => {
-  const resource = req.params.resource as keyof Mocks;
-  const collection = Object.prototype.hasOwnProperty.call(mocks, resource) ? mocks[resource] : undefined;
-
-  if (!collection) {
-    // Mirror json-server's unknown-resource response: a 404 with an empty JSON
-    // object body (rather than Express's plaintext "Not Found").
-    res.status(404).json({});
-    return;
-  }
-
-  let items: readonly Record<string, unknown>[] = collection as readonly unknown[] as readonly Record<string, unknown>[];
-
-  // Full-text `q` filtering
-  const q = req.query['q'];
-  if (typeof q === 'string' && q.length > 0) {
-    const query = q.toLowerCase();
-    items = items.filter((item) => matchesQuery(item, query));
-  }
-
-  // X-Total-Count reflects the FILTERED count, before slicing
-  res.setHeader('X-Total-Count', items.length.toString());
-
-  // `_start` / `_limit` offset slicing
-  const hasStart = typeof req.query['_start'] === 'string';
-  const hasLimit = typeof req.query['_limit'] === 'string';
-
-  if (hasStart || hasLimit) {
-    const start = parseInteger(req.query['_start'], 0);
-    if (hasLimit) {
-      const limit = parseInteger(req.query['_limit'], 0);
-      items = items.slice(start, start + limit);
-    } else {
-      items = items.slice(start);
-    }
-  }
-
-  res.json(items);
-});
-
-// Mount routes
-app.use(`${isProduction ? '/api' : '/'}`, router);
+// Mount the per-resource routers. Each router defines its own paths (e.g.
+// '/albums', '/users'), so they are mounted at the environment prefix: '/api'
+// in production, the root in dev.
+app.use(prefix, albumsRouter);
+app.use(prefix, usersRouter);
 
 // Start listening
 app.listen(port, () => {
