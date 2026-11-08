@@ -5,13 +5,11 @@ import express from 'express';
 import { delay } from './middlewares/delay.ts';
 import { error } from './middlewares/errors.ts';
 
-// routes
 import * as albums from './routes/albums.ts';
 import * as users from './routes/users.ts';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-// set the port of our application
 const port = process.env.PORT || 3000;
 
 // Built frontend (resolved from the cwd, i.e. the project root)
@@ -25,9 +23,9 @@ const api = express.Router();
 // requests (ng serve on :4200 -> mock server on :3000) can read X-Total-Count.
 api.use(cors({ exposedHeaders: ['X-Total-Count'] }));
 
-// Simulated network conditions (random errors are dev-only)
-api.use(delay);
+// Simulated network conditions (dev-only)
 if (!isProduction) {
+  api.use(delay);
   api.use(error);
 }
 
@@ -55,7 +53,6 @@ if (isProduction) {
   app.use(api);
 }
 
-// Start listening
 app.listen(port, () => {
   console.log(`Mock server is running! Open the browser at http://localhost:${port}`);
 });
